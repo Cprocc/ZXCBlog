@@ -1,6 +1,9 @@
 ﻿{% extends "base.html" %}
 {% block content %}
     <!-- /主体 -->
+    {% load static %}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/code.css' %}">  {#语法高亮#}
+        <link rel="stylesheet" type="text/css" href="/static/css/code.css">  {#语法高亮#}
     <div id="main-container" class="container clearfix">
         <section class="post-left">
             <div class="breadcrumb">您的位置：
@@ -30,8 +33,8 @@
 
                     <div>
                         <div><b>上一篇：</b>
-                            {% if netx_blog %}
-                                <a href="show-{{ netx_blog.pk }}.html" class="article-tag">{{ netx_blog }}</a>
+                            {% if next_blog %}
+                                <a href="show-{{ next_blog.pk }}.html" class="article-tag">{{ next_blog }}</a>
                             {% else %}
                                 没有了
                             {% endif %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Article, Category, Banner, Tag, Link
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+import markdown
 
 def index(request):
     """
@@ -58,12 +58,17 @@ def page_list(request, lid):
 # 内容页
 def show(request, sid):
     show = Article.objects.get(id=sid)  # 查询指定ID的文章
+    show.body = markdown.markdown(show.body, extensions=[
+                                                    'markdown.extensions.extra',
+                                                    'markdown.extensions.toc',
+                                                    'markdown.extensions.codehilite',
+                                                        ], safe_mode=True, enable_attributes=False)
     allcategory = Category.objects.all()  # 导航上的分类
     tags = Tag.objects.all()  # 右侧所有标签
     remen = Article.objects.filter(recommend=2)[:6]  # 右侧热门推荐
     hot = Article.objects.all().order_by('?')[:10]  # 内容下面的您可能感兴趣的文章，随机推荐
     previous_blog = Article.objects.filter(created_time__gt=show.created_time, category=show.category.id).first()
-    netx_blog = Article.objects.filter(created_time__lt=show.created_time, category=show.category.id).last()
+    next_blog = Article.objects.filter(created_time__lt=show.created_time, category=show.category.id).last()
     show.views = show.views + 1
     show.save()
     return render(request, 'show.html', locals())

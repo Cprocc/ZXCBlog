@@ -22,6 +22,7 @@ from blog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ueditor/', include('DjangoUeditor.urls')),
+    path(r'mdeditor/', include('mdeditor.urls')),
     re_path('^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     path('', views.index, name='index'),
     path('list-<int:lid>.html', views.page_list, name='list'),
