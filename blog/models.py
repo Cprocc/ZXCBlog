@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from mdeditor.fields import MDTextField
-from DjangoUeditor.models import UEditorField
 """
 6张表
     分别是Category，Tag，Article，Link，Banner，Recommend
