@@ -3,6 +3,7 @@ from .models import Article, Category, Banner, Tag, Link
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import markdown
 
+
 def index(request):
     """
     获取到所有的category，嵌入到index页面中
@@ -62,7 +63,7 @@ def show(request, sid):
                                                     'markdown.extensions.extra',
                                                     'markdown.extensions.toc',
                                                     'markdown.extensions.codehilite',
-                                                        ], safe_mode=True, enable_attributes=False)
+                                                        ], safe_mode=True, enable_attributes=False)  # markdown转html
     allcategory = Category.objects.all()  # 导航上的分类
     tags = Tag.objects.all()  # 右侧所有标签
     remen = Article.objects.filter(recommend=2)[:6]  # 右侧热门推荐
@@ -114,3 +115,11 @@ def search(request):
 def about(request):
     allcategory = Category.objects.all()
     return render(request, 'page.html', locals())
+
+
+# 可以进行的优化
+def global_variable(request):
+    allcategory = Category.objects.all()
+    remen = Article.objects.filter(tui__id=2)[:6]
+    tags = Tag.objects.all()
+    return locals()

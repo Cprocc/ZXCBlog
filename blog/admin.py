@@ -6,6 +6,8 @@ from .models import Banner, Category, Tag, Recommend, Article, Link
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
+    search_fields = ['title']
+    # 设置admin界面的查询选项依据
     list_display = ('id', 'category', 'title', 'recommend', 'user', 'views', 'created_time')
     # 文章列表里显示想要显示的字段
     list_per_page = 50
